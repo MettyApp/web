@@ -4,8 +4,8 @@ import { getClient } from "@/lib/client";
 import Link from 'next/link'
 
 const query = gql`
-  query loadHistory {
-  listRecordings (savedAfter: 0, pageSize: 20) {
+  query loadHistory($beanId: String) {
+  listRecordings (pageSize: 20, where: {savedAfter: 0, beanId: $beanId}) {
     total
     items {
       id
@@ -19,6 +19,10 @@ const query = gql`
         brewEnd
         brewMaxFlowRate
       }
+      degustations {
+        id
+        rating
+      }
       bean {
         id
         imageUrl
@@ -27,10 +31,9 @@ const query = gql`
   }
 }
 `
-export default async function ExtractionList({ selected }: { selected: string }) {
-
+export default async function ExtractionList({ searchParams }: { searchParams: { [key: string]: string | undefined } }) {
   const { data } = await getClient().query({
-    query, context: {
+    query, variables: { beanId: searchParams['beanId'] }, context: {
       fetchOptions: {
         next: { revalidate: 5 },
       },
@@ -38,7 +41,7 @@ export default async function ExtractionList({ selected }: { selected: string })
   });
   return <div>
     <p className='font-extrabold uppercase pb-2'>Extractions</p>
-    {data.listRecordings.items.map((e: any) => <Link href={`/extraction/${e.id}`} key={e.id}><ExtractionTile recording={e} selected={selected == e.id} /></Link>)}
+    {data.listRecordings.items.map((e: any) => <Link href={`/extraction/${e.id}?${searchParams['beanId'] ? `beanId=${searchParams['beanId']}` : ''}`} key={e.id}><ExtractionTile recording={e} /></Link>)}
 
   </div>;
 }

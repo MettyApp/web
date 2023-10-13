@@ -1,7 +1,9 @@
 'use client';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
+import RatingBar from './RatingBar';
 
-function timeAgo(timestamp: number) {
+export function timeAgo(timestamp: number) {
   const now = new Date().getTime();
   const secondsAgo = Math.floor((now - timestamp) / 1000);
 
@@ -26,14 +28,18 @@ function timeAgo(timestamp: number) {
 }
 
 
-export default function ExtractionTile({ recording, selected }: {recording: any, selected: boolean}) {
+export default function ExtractionTile({ recording }: { recording: any }) {
+
+  const pathname = usePathname();
 
   const backgroundVariant = {
     'true': 'bg-black bg-opacity-10',
     'false': '',
   }
 
-  const isSelected = selected ? 'true' : 'false';
+  const isSelected = pathname.includes(recording.id) ? 'true' : 'false';
+  const rating = recording.degustations.reduce((acc: number, cur: any) => cur.rating + acc, 0) / recording.degustations.length;
+
 
   return <div className={`${backgroundVariant[isSelected]} flex items-center my-1 px-4 p-2 hover:bg-black active:bg-black hover:bg-opacity-5 active:bg-opacity-10 rounded-xl`}>
     <div className='border-2 rounded-full overflow-hidden w-14 h-14 mr-2 bg-white'>
@@ -44,9 +50,10 @@ export default function ExtractionTile({ recording, selected }: {recording: any,
         width={56}
         height={56} />
     </div>
-    <div className='flex flex-col p-2'>
+    <div className='flex-1 flex-col p-2'>
       <p className='font-semibold'>{recording.parameters.dose}g into {recording.insights.effectiveYield.toFixed(0)}g . {recording.parameters.temperature}°C</p>
-      <p className='font-light text-xs'>{(recording.insights.brewEnd / 1000).toFixed(0)}s - {recording.insights.brewMaxFlowRate.toFixed(1)} g/s - {timeAgo(recording.savedAt)}</p>
+      <p className='font-light text-xs my-1'>{(recording.insights.brewEnd / 1000).toFixed(0)}s - {recording.insights.brewMaxFlowRate.toFixed(1)} g/s - {timeAgo(recording.savedAt)}</p>
+      <RatingBar rating={rating} />
     </div>
   </div>;
 }

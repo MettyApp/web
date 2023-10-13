@@ -1,11 +1,15 @@
 "use client";
 import { ResponsiveLine } from '@nivo/line'
-export default function ExtractionChart({ recording }: any) {
+export default function ExtractionChart({ recording, compareWith }: any) {
   const data = [
     { id: 'rate', "color": "#ebde34ff", data: recording.samples.scale.map((e: any) => ({ 'x': new Date(e.receivedAt / 1000), 'y': e.smoothedRate * 10 })) },
     { id: 'weight', 'color': '#8f5522ff', data: recording.samples.scale.map((e: any) => ({ 'x': new Date(e.receivedAt / 1000), 'y': e.value })) },
     { id: 'flow', color: 'blue', data: recording.samples.pump.map((e: any) => ({ 'x': new Date(e.receivedAt / 1000), 'y': e.smoothedRate * 10 })) },
   ];
+
+  if (compareWith != undefined) {
+    data.push({ id: 'compare-rate', color: "#00de3450", data: compareWith.samples.scale.map((e: any) => ({ 'x': new Date(e.receivedAt / 1000), 'y': e.smoothedRate * 10 })) },)
+  }
 
   return (<ResponsiveLine
     data={data}
