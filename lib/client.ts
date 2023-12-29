@@ -5,15 +5,19 @@ import {
   NextSSRApolloClient,
 } from "@apollo/experimental-nextjs-app-support/ssr";
 import { registerApolloClient } from "@apollo/experimental-nextjs-app-support/rsc";
+import { getSession } from './session';
 
 export const { getClient } = registerApolloClient(() => {
 
-  const authLink = setContext((_, { headers }) => {
-    const token = process.env.NEXT_API_KEY
+  const authLink = setContext(async (_, { headers }) => {
+    const session = await getSession();
+    if (session === undefined) {
+      throw new Error("unauthorized");
+    }
     return {
       headers: {
         ...headers,
-        'X-Api-Key': token,
+        'Authorization': `Bearer ${session.accessToken}`,
       },
     }
   })

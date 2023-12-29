@@ -60,7 +60,7 @@ export default function Profile() {
       </ul>
     </div>
     <div className='flex flex-row justify-between'>
-      <button type='button' disabled={working || email == null} onClick={(_) => enrollDevice()} className="font-bold text-sm text-black rounded disabled:opacity-30">
+      <button type='button' disabled={working || email == null} onClick={(_) => enrollDevice()} className="font-bold text-sm text-black rounded disabled:opacity-30 mr-4">
         Add current device
       </button>
       <button type='button' disabled={working || email == null} onClick={(_) => doLogout()} className="bg-black hover:enabled:bg-black-700 text-white font-bold py-2 px-4 rounded focus:enabled:outline-none disabled:opacity-30 hover:enabled:bg-opacity-80">

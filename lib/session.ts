@@ -12,7 +12,7 @@ const JWKS = createRemoteJWKSet(
 
 export class Session {
   private client = new CognitoIdentityProviderClient({ region: "eu-west-1" });
-  constructor(public id: string, public idToken: string, private accessToken: string, private refreshToken: string) { }
+  constructor(public id: string, public idToken: string, public accessToken: string, private refreshToken: string) { }
 
   public static fromAuth(id: string, resp: AuthenticationResultType): Session {
     return new Session(id, resp.IdToken!, resp.AccessToken!, resp.RefreshToken!);

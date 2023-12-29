@@ -21,8 +21,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main className="flex flex-col md:flex-row max-h-screen max-w-full overflow-auto min-w-0">
-          <div className="flex flex-col min-w-0 items-center">
+        <div className="flex flex-col md:flex-row max-h-screen max-w-full min-h-screen min-w-screen overflow-auto min-w-0">
+          <div className="flex flex-row md:flex-col min-w-0 items-center">
             <Image
               src="/logo.svg"
               alt="Metty Logo"
@@ -36,7 +36,7 @@ export default function RootLayout({
           <div className="flex flex-1 min-w-0">
             {children}
           </div>
-        </main></body>
+        </div></body>
     </html>
   )
 }
