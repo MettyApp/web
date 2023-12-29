@@ -7,6 +7,8 @@ import { kv } from '@vercel/kv';
 import { uid } from 'uid-promise';
 import { PublicKeyCredentialRequestOptionsJSON } from '@simplewebauthn/typescript-types';
 import { deleteSession, getSession, saveSessionFromAuth } from '@/lib/session';
+import { gql } from '@apollo/client';
+import { getClient } from '@/lib/client';
 
 const client = new CognitoIdentityProviderClient({ region: "eu-west-1" });
 const rpEndpoint = process.env['RP_ENDPOINT_URL']!
@@ -295,4 +297,15 @@ export async function getUser(): Promise<UserProfile> {
     email: await session?.username(),
     ...(await resp.json()),
   };
+}
+
+export async function addRecordingDegustation(id: string, notes: string, rating: number): Promise<void> {
+  const mutation = gql`mutation addNote($id: String!, $notes: String, $rating: Int) {
+    saveDegustation(extractionId: $id, notes: $notes, rating: $rating) {
+       id
+     }
+   }`;
+  const { data } = await getClient().mutate({
+    mutation, variables: { id, notes, rating }
+  });
 }

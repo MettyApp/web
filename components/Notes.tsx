@@ -1,3 +1,4 @@
+import AddNoteForm from './AddNoteForm';
 import RatingBar from './RatingBar';
 
 export default function Notes({ recording }: { recording: any }) {
@@ -14,6 +15,7 @@ export default function Notes({ recording }: { recording: any }) {
           </div>
         </div>
       ))}
+      <AddNoteForm recordingId={recording.id} />
     </div>
   </div>);
 }
