@@ -10,6 +10,14 @@ import { getSession } from './session';
 export const { getClient } = registerApolloClient(() => {
 
   const authLink = setContext(async (_, { headers }) => {
+    if (process.env.ENFORCE_AUTHZ === 'no') {
+      return {
+        headers: {
+          ...headers,
+          'X-Api-Key': process.env.NEXT_API_KEY,
+        },
+      }
+    }
     const session = await getSession();
     if (session === undefined) {
       throw new Error("unauthorized");
