@@ -1,11 +1,9 @@
 import { getClient } from '@/lib/client';
 import { gql } from '@apollo/client'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid'
-import BeanTile from '../../../components/BeanTile';
+import BeanTile from '@/components/BeanTile';
 import DataTile from '@/components/DataTile';
-import React, { Suspense } from 'react';
+import React from 'react';
 import ExtractionChart from '@/components/ExtractionChart';
-import ExtractionList from '@/components/ExtractionList';
 import RatingBar from '@/components/RatingBar';
 import ComparisonList from '@/components/ComparisonList';
 

@@ -11,17 +11,25 @@
   "dependencies": {
     "@apollo/client": "^3.8.0-rc.2",
     "@apollo/experimental-nextjs-app-support": "^0.4.3",
+    "@aws-sdk/client-cognito-identity-provider": "^3.477.0",
     "@heroicons/react": "^2.0.18",
     "@nivo/bar": "^0.83.0",
     "@nivo/bump": "^0.83.0",
     "@nivo/core": "^0.83.0",
     "@nivo/line": "^0.83.0",
     "@nivo/stream": "^0.83.0",
+    "@simplewebauthn/browser": "8.3.4",
+    "@simplewebauthn/server": "^8.3.5",
+    "@simplewebauthn/typescript-types": "^8.3.4",
+    "@vercel/kv": "^1.0.1",
     "@visx/mock-data": "^3.3.0",
     "graphql": "^16.8.1",
-    "next": "latest",
-    "react": "latest",
-    "react-dom": "latest"
+    "iron-session": "^8.0.1",
+    "jose": "^5.2.0",
+    "next": "14.0.4",
+    "react": "^18",
+    "react-dom": "^18",
+    "uid-promise": "^2.0.5"
   },
   "devDependencies": {
     "@types/node": "latest",
