@@ -39,7 +39,7 @@ export default function AddNoteForm({ recordingId }: { recordingId: string }) {
             <button onClick={() => setActive(!active)} className="font-bold mr-2 py-2 px-4 text-sm text-black rounded disabled:opacity-30 hover:bg-black hover:bg-opacity-5 active:bg-black active:bg-opacity-10">
               Cancel
             </button>
-            <button className="bg-black hover:enabled:bg-black-700 text-white font-bold py-2 px-4 rounded focus:enabled:outline-none disabled:opacity-30 hover:enabled:bg-opacity-80">
+            <button disabled={notes.length <= 3} className="bg-black hover:enabled:bg-black-700 text-white font-bold py-2 px-4 rounded focus:enabled:outline-none disabled:opacity-30 hover:enabled:bg-opacity-80">
               Save
             </button>
           </div>

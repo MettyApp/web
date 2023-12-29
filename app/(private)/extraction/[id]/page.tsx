@@ -7,6 +7,7 @@ import ExtractionChart from '@/components/ExtractionChart';
 import RatingBar from '@/components/RatingBar';
 import ComparisonList from '@/components/ComparisonList';
 import Notes from '@/components/Notes';
+import { Bars3Icon } from '@heroicons/react/24/solid';
 
 
 export const revalidate = 5;
@@ -84,8 +85,7 @@ query getRecording($id: String!) {
 }
 `
 
-export default async function Extraction({ params, searchParams }: { params: { id: string }, searchParams: { [key: string]: string | undefined } }) {
-  const compareWith = searchParams['compareWith'];
+export default async function Extraction({ params }: { params: { id: string }, searchParams: { [key: string]: string | undefined } }) {
 
   const { data } = await getClient().query({
     query, variables: { id: params.id }, context: {
@@ -94,29 +94,19 @@ export default async function Extraction({ params, searchParams }: { params: { i
       },
     }
   });
-  let comparisonData = undefined;
-  if (compareWith != undefined) {
-    const { data } = await getClient().query({
-      query, variables: { id: compareWith }, context: {
-        fetchOptions: {
-          next: { revalidate: 5 },
-        },
-      }
-    });
-    comparisonData = data;
-  }
+
 
   const recording = data.getRecording;
   const prebrewVol = recording.samples.pump.find((e: any) => e.receivedAt >= recording.insights.preBrewEnd) ?? { value: 0 };
   const prebrewDrop = recording.samples.scale.find((e: any) => e.receivedAt >= recording.insights.preBrewEnd) ?? { value: 0 };
 
   return (
-    <div className='flex flex-col xl:flex-row h-full min-w-0'>
-      <div className='flex-1 min-w-0'>
+    <div className='flex flex-col xl:flex-row h-full min-w-0 mx-2'>
+      <a className='lg:hidden' href="#menu"><Bars3Icon className='h-6 w-6' /></a>
+      <div className='flex-1 min-w-0 xl:border-r xl:overflow-scroll'>
         <div>
           <div>
             <BeanTile recording={recording} />
-            <ComparisonList recording={recording} />
             <p className='font-extrabold uppercase pt-4'>Extraction</p>
             <div className='flex flex-row pt-2 min-w-0'>
               <DataTile name='duration' value={`${(recording.insights.brewEnd / 1000).toFixed(1)}s`} />
@@ -124,8 +114,8 @@ export default async function Extraction({ params, searchParams }: { params: { i
               <DataTile name='tds' value={`${(recording.insights.tds).toFixed(1)}%`} />
               <DataTile name='ey' value={`${(recording.insights.ey).toFixed(1)}%`} />
             </div>
-            <div className='py-4 flex-1 h-96 min-w-0 max-w-xl'>
-              <ExtractionChart recording={recording} compareWith={comparisonData?.getRecording} />
+            <div className='mr-4 flex-1 h-96'>
+              <ExtractionChart recording={recording} />
             </div>
             <p className='font-extrabold uppercase pt-4'>Brew</p>
             <div className='flex flex-row pt-2 min-w-0'>

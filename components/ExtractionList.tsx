@@ -40,7 +40,7 @@ export default async function ExtractionList() {
     },
   });
   return <div>
-    <p className='font-extrabold uppercase pb-2'>Extractions</p>
+    <p className='font-extrabold uppercase pb-2 mx-4'>Extractions</p>
     {data.listRecordings.items.map((e: any) => <Link href={`/extraction/${e.id}`} key={e.id}><ExtractionTile recording={e} /></Link>)}
 
   </div>;

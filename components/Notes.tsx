@@ -2,8 +2,7 @@ import AddNoteForm from './AddNoteForm';
 import RatingBar from './RatingBar';
 
 export default function Notes({ recording }: { recording: any }) {
-  return (<div className='xl:border-l-2 xl:pl-4 py-4 min-w-0 max-w-xs'>
-
+  return (<div className='xl:pl-4 py-2 min-w-0 xl:w-96'>
     <p className='font-extrabold uppercase'>Notes</p>
     <div className='flex flex-col pt-4 min-w-0'>
       {recording.degustations.map((e: any) => (
