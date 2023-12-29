@@ -22,26 +22,6 @@ query getRecording($id: String!) {
       origin
       roaster
       imageUrl
-      recordings {
-        total
-        items {
-          id
-          savedAt
-          parameters {
-            dose
-            temperature
-            yield
-          }
-          insights {
-            brewEnd
-            effectiveYield
-            brewMaxFlowRate
-          }
-          degustations {
-            rating
-          }
-        }
-      }
     }
     grinder
     grinderSettings

@@ -23,7 +23,7 @@ export default function ExtractionLayout({
           <ExtractionList />
         </Suspense>
       </div>
-      <div className='bg-white flex-1'>
+      <div className="bg-white flex-1">
         <div className='flex xl:flex-row flex-col px-4 py-2 min-w-0 md:overflow-scroll xl:overflow-hidden h-full'>
           <div className='xl:overflow-scroll flex-1'>
             <div id="menu" className='absolute target:visible target:flex invisible overflow-hidden hidden top-12 md:top-0 bottom-0 md:left-16 left-0 right-0 bg-black bg-opacity-0 ease-in-out target:bg-opacity-80 z-10 max-h-screen max-w-full'>

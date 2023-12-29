@@ -14,6 +14,10 @@ export default function Notes({ recording }: { recording: any }) {
           </div>
         </div>
       ))}
+      {recording.degustations.length == 0 && <p className='text-sm italic'>
+        No degustation notes added yet.<br />
+        You can add a degustation note by clicking the button below.
+      </p>}
       <AddNoteForm recordingId={recording.id} />
     </div>
   </div>);
