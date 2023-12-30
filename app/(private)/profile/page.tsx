@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { addAuthenticator, getUser, Authenticator, enrollFIDO2Authenticator, removeAuthenticator, UserProfile, logout } from '@/app/actions';
 import { startRegistration } from '@simplewebauthn/browser';
 import { useRouter } from 'next/navigation';
@@ -14,8 +14,8 @@ function Authenticator({ authenticator }: { authenticator: Authenticator }) {
     await removeAuthenticator(id);
   }
 
-  return <li className='group text-black flex flex-row justify-between hover:bg-gray-100 rounded-full pr-4 py-2'>
-    {authenticator.credentialId}
+  return <li className='group text-black flex flex-row justify-between hover:bg-gray-100 rounded-full px-4 py-2'>
+    {authenticator.friendlyName ?? authenticator.credentialId}
     <button className='h-6 w-6 group-hover:block hidden'><XMarkIcon onClick={(_) => doRemoveAuthenticator(deviceId)} /></button>
   </li>
 }
@@ -52,14 +52,14 @@ export default function Profile() {
   const authenticators = userProfile?.authenticators;
   const email = userProfile?.email;
   return (<main>
-    <h1 className='text-2xl text-black font-extrabold mb-8'>Hello, {email}</h1>
+    <h1 className='text-2xl text-black font-extrabold mb-8 px-4'>Hello, {email}</h1>
     <div className='my-4'>
-      <h2 className='text-black font-bold'>Registered authenticators</h2>
+      <h2 className='text-black font-bold px-4'>Registered authenticators</h2>
       <ul className='list-disc list-inside mt-4'>
         {authenticators?.map((e) => <Authenticator key={authenticatorId(e)} authenticator={e} />)}
       </ul>
     </div>
-    <div className='flex flex-row justify-between'>
+    <div className='flex flex-row justify-between px-4'>
       <button type='button' disabled={working || email == null} onClick={(_) => enrollDevice()} className="font-bold text-sm text-black rounded disabled:opacity-30 mr-4">
         Add current device
       </button>

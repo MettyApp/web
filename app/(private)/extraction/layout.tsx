@@ -1,15 +1,7 @@
 import ExtractionList from '@/components/ExtractionList'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid'
+import PingLoader from '@/components/PingLoader'
+import { XMarkIcon } from '@heroicons/react/24/solid'
 import { Suspense } from 'react'
-
-async function PingLoader() {
-  return (
-    <div className='h-full flex min-h-full min-w-0 items-center justify-center'>
-      <span className="flex h-3 w-3">
-        <span className="p-3 animate-ping inline-flex h-full w-full rounded-full bg-gray-400 opacity-75"></span>
-      </span>
-    </div>)
-}
 
 export default function ExtractionLayout({
   children,
@@ -29,13 +21,15 @@ export default function ExtractionLayout({
             <div id="menu" className='absolute target:visible target:flex invisible overflow-hidden hidden top-12 md:top-0 bottom-0 md:left-16 left-0 right-0 bg-black bg-opacity-0 ease-in-out target:bg-opacity-80 z-10 max-h-screen max-w-full'>
               <div className='p-4 flex flex-col rounded-e-md bg-white'>
                 <div className='h-6 w-6'><a href="#"><XMarkIcon /></a></div>
-                <div className="flex-1 flex-col overflow-scroll"><ExtractionList /></div>
+                <div className="flex-1 flex-col overflow-scroll">
+                  <Suspense fallback={<PingLoader />}>
+                    <ExtractionList />
+                  </Suspense>
+                </div>
               </div>
               <a href="#" className='flex-1' />
             </div>
-            <Suspense fallback={<PingLoader />}>
-              {children}
-            </Suspense>
+            {children}
           </div>
         </div>
       </div>

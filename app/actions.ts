@@ -1,10 +1,8 @@
 'use server'
 
 import { AuthenticationResultType, CognitoIdentityProviderClient, ConfirmSignUpCommand, InitiateAuthCommand, ResendConfirmationCodeCommand, RespondToAuthChallengeCommand, SignUpCommand } from '@aws-sdk/client-cognito-identity-provider';
-import { generateRegistrationOptions } from '@simplewebauthn/server';
 import { headers } from 'next/headers';
 import { kv } from '@vercel/kv';
-import { uid } from 'uid-promise';
 import { PublicKeyCredentialRequestOptionsJSON } from '@simplewebauthn/typescript-types';
 import { deleteSession, getSession, saveSessionFromAuth } from '@/lib/session';
 import { gql } from '@apollo/client';
@@ -18,22 +16,6 @@ interface WrappedResponse<T> {
   response?: T
 }
 
-export async function register(username: string): Promise<any> {
-  const _h = headers();
-  const options = await generateRegistrationOptions({
-    rpName: 'metty-auth',
-    rpID: _h.get('Host')!,
-    userID: (await uid(64)),
-    userName: username,
-    attestationType: 'none',
-    authenticatorSelection: {
-      residentKey: 'preferred',
-      userVerification: 'preferred',
-    },
-  });
-  await kv.set(username, options.challenge, { ex: 100 });
-  return options;
-};
 export async function enrollFIDO2Authenticator(): Promise<WrappedResponse<any>> {
   const _h = headers();
   try {

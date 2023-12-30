@@ -2,12 +2,11 @@ import { getClient } from '@/lib/client';
 import { gql } from '@apollo/client'
 import BeanTile from '@/components/BeanTile';
 import DataTile from '@/components/DataTile';
-import React from 'react';
+import React, { Suspense } from 'react';
 import ExtractionChart from '@/components/ExtractionChart';
-import RatingBar from '@/components/RatingBar';
-import ComparisonList from '@/components/ComparisonList';
 import Notes from '@/components/Notes';
 import { Bars3Icon } from '@heroicons/react/24/solid';
+import PingLoader from '@/components/PingLoader';
 
 
 export const revalidate = 5;
@@ -65,7 +64,11 @@ query getRecording($id: String!) {
 }
 `
 
-export default async function Extraction({ params }: { params: { id: string }, searchParams: { [key: string]: string | undefined } }) {
+
+export default async function ExtractionPage({ params }: { params: { id: string } }) {
+  return <Suspense fallback={<PingLoader />}><Extraction params={params} /></Suspense>
+}
+async function Extraction({ params }: { params: { id: string } }) {
 
   const { data } = await getClient().query({
     query, variables: { id: params.id }, context: {

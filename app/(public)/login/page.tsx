@@ -45,7 +45,7 @@ export default function Home() {
     }
     console.log('considering redirect to ' + redirect);
     const url = new URL(redirect);
-    if (!['http:', 'metty:'].includes(url.protocol)) {
+    if (!['http:', 'metty:', 'fugue:'].includes(url.protocol)) {
       console.error('refusing to redirect to protocol ' + url.protocol);
       return
     }

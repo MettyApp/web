@@ -9,8 +9,8 @@ import Link from 'next/link'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Metty',
-  description: 'Coffee log companion',
+  title: 'Fugue',
+  description: 'Your coffee companion',
 }
 
 export default function RootLayout({
@@ -26,7 +26,7 @@ export default function RootLayout({
           <div className="flex flex-row md:flex-col min-w-0 items-center">
             <Link href="/extraction"><Image
               src="/logo.svg"
-              alt="Metty Logo"
+              alt=""
               className="m-4"
               width={logoSize}
               height={logoSize}

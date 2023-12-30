@@ -8,7 +8,7 @@ export default function BeanTile({ recording }: { recording: any; }) {
       <div className='border-2 rounded-full overflow-hidden w-14 h-14 bg-white'>
         <Image
           src={recording.bean.imageUrl ?? '/logo.svg'}
-          alt="Metty Logo"
+          alt=""
           objectFit="cover"
           width={56}
           height={56} />

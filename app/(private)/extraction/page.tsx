@@ -1,4 +1,6 @@
 import ExtractionList from '@/components/ExtractionList';
+import PingLoader from '@/components/PingLoader';
+import { Suspense } from 'react';
 
 export default function ExtractionHome() {
   return (
@@ -6,7 +8,11 @@ export default function ExtractionHome() {
       <p className='text-sm hidden lg:block'>
         Please select a recording.
       </p>
-      <div className='lg:hidden'><ExtractionList /></div>
+      <div className='lg:hidden'>
+        <Suspense fallback={<PingLoader />}>
+          <ExtractionList />
+        </Suspense>
+      </div>
     </div>
   )
 }
