@@ -18,7 +18,7 @@ export class Session {
     return new Session(id, resp.IdToken!, resp.AccessToken!, resp.RefreshToken!);
   }
   public static async fromId(id: string): Promise<Session> {
-    const data = await kv.get<string>(id) ?? '';
+    const data = (await kv.get<string>(id)) ?? '';
     const unsealedData = await unsealData<Session>(data, { password: `${id}${process.env.IRON_PASSWORD}` });
     return new Session(id, unsealedData.idToken, unsealedData.accessToken, unsealedData.refreshToken);
   }

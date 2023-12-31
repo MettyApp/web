@@ -8,7 +8,7 @@ export default function ExtractionHome() {
       <p className='text-sm hidden lg:block'>
         Please select a recording.
       </p>
-      <div className='lg:hidden'>
+      <div className='flex-1 lg:hidden'>
         <Suspense fallback={<PingLoader />}>
           <ExtractionList />
         </Suspense>
