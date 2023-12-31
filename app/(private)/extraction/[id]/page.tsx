@@ -34,7 +34,9 @@ query getRecording($id: String!) {
       savedAt
       notes
       rating
-      author
+      author {
+        id
+      }
     }
     insights {
       brewEnd
@@ -96,11 +98,11 @@ async function Extraction({ params }: { params: { id: string } }) {
       <div className='flex-1  xl:border-r xl:overflow-scroll flex flex-col gap-y-4'>
         <a className='lg:hidden' href="#menu"><Bars3Icon className='h-6 w-6' /></a>
         <BeanTile recording={recording} />
-        <TitleRow title='Extraction'>
-          <DataTile name='duration' value={`${(recording.insights.brewEnd / 1000).toFixed(1)}s`} />
-          <DataTile name={`yield (1:${(recording.insights.effectiveYield / recording.parameters.dose).toFixed(1)})`} value={`${(recording.insights.effectiveYield).toFixed(0)}g`} />
-          <DataTile name='tds' value={`${(recording.insights.tds).toFixed(1)}%`} />
-          <DataTile name='ey' value={`${(recording.insights.ey).toFixed(1)}%`} />
+        <TitleRow title='Recipe'>
+          <DataTile name='Dose' value={`${(recording.parameters.dose).toFixed(1)}g`} />
+          <DataTile name={`yield (1:${(recording.parameters.yield / recording.parameters.dose).toFixed(1)})`} value={`${(recording.parameters.yield).toFixed(0)}g`} />
+          <DataTile name='Water' value={`${(recording.parameters.temperature).toFixed(0)}°C`} />
+          <DataTile name='Grinder' value={`${(recording.grinderSettings).split('@')[0]}`} />
         </TitleRow>
         <div className='h-96'>
           <ExtractionChart recording={recording} />
@@ -117,11 +119,11 @@ async function Extraction({ params }: { params: { id: string } }) {
           <DataTile name='volume' value={`${(prebrewVol.value).toFixed(1)}ml`} />
           <DataTile name='dripped' value={`${(prebrewDrop.value).toFixed(1)}g`} />
         </TitleRow>
-        <TitleRow title='Recipe'>
-          <DataTile name='Dose' value={`${(recording.parameters.dose).toFixed(1)}g`} />
-          <DataTile name={`yield (1:${(recording.parameters.yield / recording.parameters.dose).toFixed(1)})`} value={`${(recording.parameters.yield).toFixed(0)}g`} />
-          <DataTile name='Water' value={`${(recording.parameters.temperature).toFixed(0)}°C`} />
-          <DataTile name='Grinder' value={`${(recording.grinderSettings).split('@')[0]}`} />
+        <TitleRow title='Extraction'>
+          <DataTile name='duration' value={`${(recording.insights.brewEnd / 1000).toFixed(1)}s`} />
+          <DataTile name={`yield (1:${(recording.insights.effectiveYield / recording.parameters.dose).toFixed(1)})`} value={`${(recording.insights.effectiveYield).toFixed(0)}g`} />
+          <DataTile name='tds' value={`${(recording.insights.tds).toFixed(1)}%`} />
+          <DataTile name='ey' value={`${(recording.insights.ey).toFixed(1)}%`} />
         </TitleRow>
       </div>
       <Notes recording={recording}></Notes>
