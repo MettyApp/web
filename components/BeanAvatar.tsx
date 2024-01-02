@@ -6,8 +6,6 @@ export default function BeanAvatar({ imageUrl, name }: { imageUrl?: string, name
       alt=""
       width={56}
       height={56}
-      className='mix'
-      objectFit='cover'
     /> : name[0].toUpperCase()}
   </div>
 }

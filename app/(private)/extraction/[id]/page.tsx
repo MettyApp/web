@@ -34,6 +34,7 @@ query getRecording($id: String!) {
       savedAt
       notes
       rating
+      medias
       author {
         id
       }
@@ -95,7 +96,7 @@ async function Extraction({ params }: { params: { id: string } }) {
 
   return (
     <div className='flex flex-col xl:flex-row h-full px-4 gap-y-8'>
-      <div className='flex-1  xl:border-r xl:overflow-scroll flex flex-col gap-y-4'>
+      <div className='flex-1 xl:border-r xl:pr-4 xl:mr-4 xl:overflow-scroll flex flex-col gap-y-4'>
         <a className='lg:hidden' href="#menu"><Bars3Icon className='h-6 w-6' /></a>
         <BeanTile recording={recording} />
         <TitleRow title='Recipe'>

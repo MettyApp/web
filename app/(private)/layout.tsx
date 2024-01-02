@@ -25,12 +25,10 @@ export default function RootLayout({
           src="/logo.svg"
           alt=""
           className="m-4"
+          unoptimized
           width={logoSize}
           height={logoSize}
-          style={{
-            maxWidth: "100%",
-            height: "auto"
-          }} />
+          />
         </Link>
         <Spacer />
         <SessionAvatar />

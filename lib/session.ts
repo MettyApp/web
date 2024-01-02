@@ -1,7 +1,7 @@
 import { AuthenticationResultType, CognitoIdentityProviderClient, InitiateAuthCommand } from '@aws-sdk/client-cognito-identity-provider';
 import { kv } from '@vercel/kv';
 import { getIronSession, sealData, unsealData } from 'iron-session';
-import { createRemoteJWKSet, jwtVerify } from 'jose';
+import { JWTVerifyOptions, createRemoteJWKSet, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
 
 const url = new URL(`https://cognito-idp.eu-west-1.amazonaws.com/${process.env.COGNITO_POOL_ID}/.well-known/jwks.json`);
@@ -28,7 +28,7 @@ export class Session {
       ClientId: process.env['COGNITO_CLIENT_ID']!,
       AuthFlow: 'REFRESH_TOKEN_AUTH',
       AuthParameters: {
-        USERNAME: await this.username(),
+        USERNAME: await this.username({ clockTolerance: 30 * 86400 }),
         REFRESH_TOKEN: this.refreshToken,
       }
     });
@@ -52,8 +52,8 @@ export class Session {
     await kv.set(this.id, payload, { ex: 86000 });
   }
 
-  public async username(): Promise<string> {
-    const resp = await jwtVerify(this.idToken ?? "", JWKS);
+  public async username(options?: JWTVerifyOptions | undefined): Promise<string> {
+    const resp = await jwtVerify(this.idToken ?? "", JWKS, options);
     return resp.payload['email'] as string;
   }
   public async isValid(): Promise<boolean> {
@@ -61,11 +61,21 @@ export class Session {
     try {
       const decoded = await jwtVerify(this.idToken ?? "", JWKS);
       if ((decoded.payload.exp ?? 0) <= now - 180) {
+        console.log('token is about to expire, refreshing');
         await this.refresh();
       }
       return true;
     } catch (err) {
-      console.error(`failed to refresh session: ${err}`);
+      if (this.refreshToken.length > 0) {
+        try {
+          await this.refresh();
+          return true;
+        } catch (err) {
+          console.error(`failed to refresh expired session: ${err}`);
+          return false
+        }
+      }
+      console.error(`failed to verify session and no refreshToken found: ${err}`);
       return false;
     }
   }
