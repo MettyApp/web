@@ -10,12 +10,12 @@ export default function ExtractionLayout({
 }) {
   return (
     <div className='bg-white/95 flex flex-1'>
-      <div className='hidden lg:block overflow-scroll w-80 p-4'>
+      <div className='hidden lg:flex overflow-scroll p-4 lg:mx-4 lg:my-2'>
         <Suspense fallback={<PingLoader />}>
           <ExtractionList />
         </Suspense>
       </div>
-      <div className="bg-white flex-1 p-4">
+      <div className="bg-white flex-1 p-4 lg:mx-4 lg:py-5">
         <div className='flex xl:flex-row flex-colmin-w-0 md:overflow-scroll xl:overflow-hidden h-full'>
           <div className='xl:overflow-scroll flex-1'>
             <div id="menu" className='absolute target:visible target:flex invisible overflow-hidden hidden top-20 md:top-0 bottom-0 md:left-20 left-0 right-0 bg-black bg-opacity-0 ease-in-out target:bg-opacity-80 z-10 max-h-screen max-w-full target:flex-col target:md:flex-row '>
