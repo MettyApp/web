@@ -96,14 +96,14 @@ async function Extraction({ params }: { params: { id: string } }) {
 
   return (
     <div className='flex flex-col xl:flex-row h-full px-4 gap-y-8'>
-      <div className='flex-1 xl:border-r xl:pr-4 xl:mr-4 xl:overflow-scroll flex flex-col gap-y-4'>
+      <div className='flex-1 xl:border-r xl:pr-4 xl:mr-4 xl:overflow-y-auto flex flex-col gap-y-4'>
         <a className='lg:hidden' href="#menu"><Bars3Icon className='h-6 w-6' /></a>
         <BeanTile recording={recording} />
         <TitleRow title='Recipe'>
           <DataTile name='Dose' value={`${(recording.parameters.dose).toFixed(1)}g`} />
           <DataTile name={`yield (1:${(recording.parameters.yield / recording.parameters.dose).toFixed(1)})`} value={`${(recording.parameters.yield).toFixed(0)}g`} />
           <DataTile name='Water' value={`${(recording.parameters.temperature).toFixed(0)}°C`} />
-          <DataTile name='Grinder' value={`${(recording.grinderSettings).split('@')[0]}`} />
+          <DataTile name='Grinder' value={`${(recording.grinderSettings)}`} />
         </TitleRow>
         <div className='h-96'>
           <ExtractionChart recording={recording} />

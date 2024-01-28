@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { addAuthenticator, getUser, Authenticator, enrollFIDO2Authenticator, removeAuthenticator, UserProfile, logout } from '@/app/actions';
 import { startRegistration } from '@simplewebauthn/browser';
 import { useRouter } from 'next/navigation';

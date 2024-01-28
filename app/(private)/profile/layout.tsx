@@ -14,7 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <div className="flex-1 flex bg-[url('/banner.jpg')] bg-cover bg-bottom items-center md:items-start justify-center flex-col">
-      <div className='flex flex-1 w-full justify-center md:py-4 bg-white flex-col md:rounded-none md:flex md:justify-center px-8 md:w-2/6'>
+      <div className='flex flex-1 w-full justify-center md:py-4 bg-white flex-col md:rounded-none md:flex md:justify-center px-2 lg:w-1/2 xl:w-2/6'>
         <div className='flex flex-col flex-1 md:justify-center my-8'>
           {children}
         </div>

@@ -41,7 +41,7 @@ export default async function ExtractionList() {
     },
   });
   return <div className='flex flex-col gap-y-2'>
-    <Link href="/extraction" className='font-extrabold uppercase'>
+    <Link href="/extraction" className='font-extrabold uppercase mx-4'>
       Extractions
     </Link>
     <div className='flex flex-col gap-y-1'>
