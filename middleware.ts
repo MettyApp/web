@@ -12,6 +12,9 @@ export const middleware = async (request: NextRequest) => {
         if (publicPathPrefixes.some((prefix) => pathname.startsWith(prefix))) {
           return NextResponse.redirect(new URL('/profile', request.url));
         }
+        if (pathname === '/') {
+          return NextResponse.redirect(new URL('/extraction', request.url))
+        }
         return NextResponse.next();
       } else {
         if (publicPathPrefixes.some((prefix) => pathname.startsWith(prefix))) {
