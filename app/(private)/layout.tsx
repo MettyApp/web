@@ -6,6 +6,8 @@ import Spacer from '@/components/Spacer'
 import Image from "next/image"
 import SessionAvatar from '@/components/SessionAvatar'
 import Link from 'next/link'
+import { Suspense } from 'react';
+import PingLoader from '@/components/PingLoader';
 
 
 export const metadata: Metadata = {
@@ -33,7 +35,9 @@ export default function RootLayout({
           />
         </Link>
         <Spacer />
-        <SessionAvatar />
+        <Suspense fallback={<PingLoader />}>
+          <SessionAvatar />
+        </Suspense>
       </div>
       <div className="flex flex-1 min-w-0">
         {children}
