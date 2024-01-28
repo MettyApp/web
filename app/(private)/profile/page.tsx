@@ -15,7 +15,7 @@ function Authenticator({ authenticator }: { authenticator: Authenticator }) {
   }
 
   return <li className='group text-black flex flex-row justify-between hover:bg-gray-100 rounded-full px-4 py-2'>
-    {authenticator.friendlyName ?? authenticator.credentialId}
+    {(authenticator.friendlyName && authenticator.friendlyName.length > 1) ?? authenticator.credentialId}
     <button className='h-6 w-6 group-hover:block hidden'><XMarkIcon onClick={(_) => doRemoveAuthenticator(deviceId)} /></button>
   </li>
 }
