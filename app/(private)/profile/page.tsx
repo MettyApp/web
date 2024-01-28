@@ -5,6 +5,7 @@ import { addAuthenticator, getUser, Authenticator, enrollFIDO2Authenticator, rem
 import { startRegistration } from '@simplewebauthn/browser';
 import { useRouter } from 'next/navigation';
 import { XMarkIcon } from '@heroicons/react/24/solid'
+import FilledButton from '@/components/FilledButton';
 
 const authenticatorId = (authenticator: Authenticator) => authenticator.credentialId;
 
@@ -15,7 +16,7 @@ function Authenticator({ authenticator }: { authenticator: Authenticator }) {
   }
 
   return <li className='group text-black flex flex-row justify-between hover:bg-gray-100 rounded-full px-4 py-2'>
-    {(authenticator.friendlyName && authenticator.friendlyName.length > 1) ?? authenticator.credentialId}
+    {(authenticator.friendlyName && authenticator.friendlyName.length >= 1) ? authenticator.friendlyName : authenticator.credentialId}
     <button className='h-6 w-6 group-hover:block hidden'><XMarkIcon onClick={(_) => doRemoveAuthenticator(deviceId)} /></button>
   </li>
 }
@@ -63,9 +64,13 @@ export default function Profile() {
       <button type='button' disabled={working || email == null} onClick={(_) => enrollDevice()} className="font-bold text-sm text-black rounded disabled:opacity-30 mr-4">
         Add current device
       </button>
-      <button type='button' disabled={working || email == null} onClick={(_) => doLogout()} className="bg-black hover:enabled:bg-black-700 text-white font-bold py-2 px-4 rounded focus:enabled:outline-none disabled:opacity-30 hover:enabled:bg-opacity-80">
-        Logout
-      </button>
+      <div>
+        <FilledButton
+          label={"Logout"}
+          disabled={working || email == null}
+          onClick={doLogout}
+        />
+      </div>
     </div>
   </main>);
 }
