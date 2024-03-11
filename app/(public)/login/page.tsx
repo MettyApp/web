@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { startAuthentication } from '@simplewebauthn/browser';
 import { useSearchParams } from 'next/navigation'
+import { PublicKeyCredentialRequestOptionsJSON } from '@simplewebauthn/typescript-types';
 
 import { answerFIDOChallenge, confirmSignup, authWithMagicLink, answerMagicLinkChallenge, decodeMagicLinkHash, authUsernameless } from '@/app/actions';
 
@@ -13,24 +14,31 @@ import FilledButton from '@/components/FilledButton';
 
 export default function Home() {
   const [working, setWorking] = useState(false);
+  const [challenge, setChallenge ] = useState<PublicKeyCredentialRequestOptionsJSON|null>(null)
   const searchParams = useSearchParams();
   const router = useRouter()
 
+  const loadChallenge = async () => {
+    const { response, error } = await authUsernameless();
+    if (error) {
+      throw error
+    }
+    console.info('loaded auth challenge')
+    setChallenge(response as PublicKeyCredentialRequestOptionsJSON)
+  }
 
   const doAuth = async () => {
     setWorking(true);
     try {
-      const { response, error } = await authUsernameless();
-      if (error) {
-        console.error(error);
-      } else {
-        const authResp = await startAuthentication(response!);
+        if (challenge === null) {
+          await loadChallenge();
+        }
+        const authResp = await startAuthentication(challenge!);
         console.log('using user handle ', authResp.response.userHandle);
         const attResp = JSON.stringify(authResp);
         const resp = await answerFIDOChallenge(authResp.response.userHandle!, attResp);
         maybeRedirect(resp.AccessToken!, resp.RefreshToken!);
       }
-    }
     finally {
       setWorking(false);
     }
@@ -99,6 +107,8 @@ export default function Home() {
         } finally {
           setWorking(false);
         }
+      } else {
+        await loadChallenge()
       }
 
     })();
