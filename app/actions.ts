@@ -230,7 +230,7 @@ export async function answerFIDOChallenge(username: string, attResp: string, ses
       ClientId: process.env['COGNITO_CLIENT_ID']!,
       AuthFlow: 'CUSTOM_AUTH',
       AuthParameters: {
-        USERNAME: username,
+          USERNAME: username,
       }
     }));
     session = initiateAuthResponse.Session
