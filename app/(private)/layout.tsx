@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
 
     <div className="flex flex-col md:flex-row max-h-screen max-w-full min-h-screen min-w-screen overflow-y-auto xl:overflow-y-hidden min-w-0">
-      <div className="flex flex-row md:flex-col items-center mx-2 md:mx-0 md:my-2">
+      <div className="flex flex-row md:flex-col items-center mx-2 md:mx-0 md:my-2 md:w-20">
         <Link href="/extraction"><Image
           src="/logo.svg"
           alt=""

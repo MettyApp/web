@@ -4,8 +4,8 @@ import { getClient } from "@/lib/client";
 import Link from 'next/link'
 
 const query = gql`
-  query loadHistory {
-  listRecordings (pageSize: 20, where: {savedAfter: 0}) {
+  query loadHistory($beanId: String) {
+  listRecordings (pageSize: 20, where: {savedAfter: 0, beanId: $beanId}) {
     total
     items {
       id
@@ -38,6 +38,9 @@ export default async function ExtractionList() {
       fetchOptions: {
         next: { revalidate: 5 },
       },
+    },
+    variables: {
+      'beanId': undefined
     },
   });
   return <div className='flex flex-col gap-y-2'>
