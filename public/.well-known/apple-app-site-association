@@ -1,23 +1,16 @@
 {
   "applinks": {
+      "apps": [],
       "details": [
            {
-             "appIDs": [ "DK4JT53B9M.coffee.fugue" ],
-             "components": [
-               {
-                  "#": "no_universal_links",
-                  "exclude": true,
-                  "comment": "Matches any URL with a fragment that equals no_universal_links and instructs the system not to open it as a universal link."
-               }
-             ]
+             "appID":  "DK4JT53B9M.coffee.fugue",
+             "paths": ["/login"]
            }
        ]
    },
    "webcredentials": {
       "apps": [ "DK4JT53B9M.coffee.fugue" ]
    },
-
-
     "appclips": {
         "apps": ["DK4JT53B9M.coffee.fugue"]
     }

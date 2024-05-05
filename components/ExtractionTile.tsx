@@ -1,10 +1,10 @@
 'use client';
-import Image from "next/image";
 import { usePathname } from 'next/navigation';
 import RatingBar from './RatingBar';
 import BeanAvatar from './BeanAvatar';
 
-export function timeAgo(timestamp: number) {
+export function timeAgo(date: string) {
+  const timestamp = Date.parse(date)
   const now = new Date().getTime();
   const secondsAgo = Math.floor((now - timestamp) / 1000);
 
@@ -29,7 +29,7 @@ export function timeAgo(timestamp: number) {
 }
 
 
-export default function ExtractionTile({ recording }: { recording: any }) {
+export default function ActivitySummaryTile({ activitySummary: activity }: { activitySummary: any }) {
 
   const pathname = usePathname();
 
@@ -38,16 +38,19 @@ export default function ExtractionTile({ recording }: { recording: any }) {
     'false': '',
   }
 
-  const isSelected = pathname.includes(recording.id) ? 'true' : 'false';
-  const rating = recording.degustations.reduce((acc: number, cur: any) => cur.rating + acc, 0) / recording.degustations.length;
-
+  const isSelected = pathname.includes(activity.id) ? 'true' : 'false';
+  const rating = activity.rating?.enjoyment || 0;
 
   return (
     <div className={`${backgroundVariant[isSelected]} flex items-center flex-1 px-4 py-2 hover:bg-black active:bg-black hover:bg-opacity-5 active:bg-opacity-10 rounded-xl`}>
-      <BeanAvatar name={recording.bean.name} imageUrl={recording.bean.imageUrl} />
+      {activity.bean &&
+      <BeanAvatar name={activity.bean.name} imageUrl={activity.bean.imageUrl} />
+      }
       <div className='flex-1 flex-col p-2'>
-        <p className='font-semibold'>{recording.parameters.dose}g into {recording.insights.effectiveYield.toFixed(0)}g . {recording.parameters.temperature}°C</p>
-        <p className='font-light text-xs my-1'>{(recording.insights.brewEnd / 1000).toFixed(0)}s - {recording.insights.brewMaxFlowRate.toFixed(1)} g/s - {timeAgo(recording.savedAt)}</p>
+        {activity.extraction &&
+        <p className='font-semibold'>{activity.extraction.recipe.dose}g into {activity.extraction.recipe.yield.toFixed(0)}g</p>
+        }
+        <p className='font-light text-xs my-1'>{timeAgo(activity.savedAt)}</p>
         <RatingBar rating={rating} />
       </div>
     </div>

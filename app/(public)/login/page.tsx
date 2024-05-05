@@ -65,7 +65,7 @@ export default function Home() {
 
       var hash = window.location.hash.slice(1);
       if (hash !== undefined && hash.length > 0) {
-        if (hash.includes('-')) {
+        if (hash.includes('=')) {
           var code;
           [hash, code] = hash.split('=');
         }

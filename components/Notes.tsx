@@ -29,14 +29,10 @@ export default function Notes({ recording }: { recording: any }) {
     <p className='font-extrabold uppercase'>Notes</p>
     <div className='flex flex-col pt-4 min-w-0'>
       <div className='grid grid-flow-col auto-cols-fr'>
-        {recording.degustations.map((e: any) => (
-          <div key={e.id}><Degustation degustation={e} /></div>
-        ))}
+        {recording.notes &&
+          <p>{recording.notes}</p>
+        }
       </div>
-      {recording.degustations.length == 0 && <p className='text-sm italic'>
-        No degustation notes added yet.<br />
-        You can add a degustation note by clicking the button below.
-      </p>}
       <AddNoteForm recordingId={recording.id} />
     </div>
   </div>);
